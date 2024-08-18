@@ -25,6 +25,7 @@ class AsyncEmbeddingService:
         """
         self.embedding_model = None
         self.flaky_network_rate = flaky_network_rate
+        self.api_key = os.environ.get("HF_API_KEY")
 
     async def embed(self, text: str) -> list[float]:
         """Generates an embedding for the given text asynchronously.
@@ -47,7 +48,7 @@ class AsyncEmbeddingService:
         url = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-mpnet-base-v2"
 
         headers = {
-            "Authorization": "Bearer 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",  # trufflehog:ignore This is an API key for an example, not prod.
+            "Authorization": f"Bearer {self.api_key}",
         }
 
         async with AsyncClient() as client:
